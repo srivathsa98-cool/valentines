@@ -20,6 +20,7 @@
       align-items: center;
       background: linear-gradient(135deg, #ff9a9e, #fad0c4);
       overflow: hidden;
+      position: relative;
     }
 
     .card {
@@ -30,6 +31,8 @@
       max-width: 600px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.2);
       animation: fadeIn 2s ease-in-out;
+      position: relative;
+      z-index: 2;
     }
 
     h1 {
@@ -82,6 +85,60 @@
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    /* Floating hearts */
+    .floating-heart {
+      position: absolute;
+      font-size: 20px;
+      color: #ff4d6d;
+      animation: floatUp 6s linear infinite;
+      z-index: 1;
+      opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(1); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-50px) scale(1.5); opacity: 0; }
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 5;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 500px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      animation: popUp 0.5s ease-in-out;
+    }
+
+    @keyframes popUp {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .close {
+      margin-top: 20px;
+      background: #e11d48;
+      color: white;
+      padding: 10px 25px;
+      border-radius: 20px;
+      cursor: pointer;
+      border: none;
+      font-size: 16px;
+    }
   </style>
 </head>
 
@@ -110,9 +167,52 @@
     </div>
   </div>
 
+  <!-- Modal -->
+  <div class="modal" id="loveModal">
+    <div class="modal-content">
+      <h2>💍 Will you be my forever Valentine? 💖</h2>
+      <p>Every heartbeat whispers your name, Likitha. ❤️</p>
+      <button class="close" onclick="closeModal()">Yes, forever! 💌</button>
+    </div>
+  </div>
+
+  <!-- Floating hearts -->
+  <div id="heartsContainer"></div>
+
+  <!-- Optional romantic music -->
+  <audio id="romanticMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
   <script>
     function showMessage() {
-      alert("Likitha, will you be my forever Valentine? 💍❤️ - Love, Srivathsa");
+      // Play music
+      document.getElementById('romanticMusic').play();
+
+      // Show modal
+      document.getElementById('loveModal').style.display = 'flex';
+
+      // Generate floating hearts
+      createFloatingHearts(30);
+    }
+
+    function closeModal() {
+      document.getElementById('loveModal').style.display = 'none';
+    }
+
+    function createFloatingHearts(count) {
+      const container = document.getElementById('heartsContainer');
+      for(let i = 0; i < count; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'floating-heart';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.fontSize = 20 + Math.random() * 30 + 'px';
+        heart.style.animationDuration = 4 + Math.random() * 4 + 's';
+        heart.style.animationDelay = Math.random() * 5 + 's';
+        heart.textContent = '❤️';
+        container.appendChild(heart);
+
+        // Remove heart after animation
+        setTimeout(() => heart.remove(), 8000);
+      }
     }
   </script>
 

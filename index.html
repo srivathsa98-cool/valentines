@@ -139,6 +139,15 @@
       border: none;
       font-size: 16px;
     }
+
+    /* Hidden YouTube player */
+    #youtubeMusic {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border: none;
+    }
+
   </style>
 </head>
 
@@ -171,26 +180,32 @@
   <div class="modal" id="loveModal">
     <div class="modal-content">
       <h2>💍 Will you be my forever Valentine? 💖</h2>
-      <p> We will conquer the World with our Love. ❤️</p>
+      <p>We will conquer the World with our Love. ❤️</p>
       <button class="close" onclick="closeModal()">Yes, forever! 💌</button>
     </div>
   </div>
 
-  <!-- Floating hearts -->
+  <!-- Floating hearts container -->
   <div id="heartsContainer"></div>
 
-  <!-- Optional romantic music -->
-  <audio id="romanticMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+  <!-- YouTube Music Embed (Ed Sheeran - Perfect) -->
+  <iframe id="youtubeMusic"
+    src=""
+    allow="autoplay">
+  </iframe>
 
   <script>
+
     function showMessage() {
-      // Play music
-      document.getElementById('romanticMusic').play();
+
+      // Start Ed Sheeran - Perfect
+      const iframe = document.getElementById("youtubeMusic");
+      iframe.src = "https://www.youtube.com/embed/2Vv-BfVoq4g?autoplay=1&loop=1&playlist=2Vv-BfVoq4g";
 
       // Show modal
       document.getElementById('loveModal').style.display = 'flex';
 
-      // Generate floating hearts
+      // Floating hearts
       createFloatingHearts(30);
     }
 
@@ -200,20 +215,27 @@
 
     function createFloatingHearts(count) {
       const container = document.getElementById('heartsContainer');
+
       for(let i = 0; i < count; i++) {
+
         const heart = document.createElement('div');
+
         heart.className = 'floating-heart';
         heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.fontSize = 20 + Math.random() * 30 + 'px';
-        heart.style.animationDuration = 4 + Math.random() * 4 + 's';
+        heart.style.fontSize = (20 + Math.random() * 30) + 'px';
+        heart.style.animationDuration = (4 + Math.random() * 4) + 's';
         heart.style.animationDelay = Math.random() * 5 + 's';
-        heart.textContent = '❤️';
+
+        heart.innerHTML = '❤️';
+
         container.appendChild(heart);
 
-        // Remove heart after animation
-        setTimeout(() => heart.remove(), 8000);
+        setTimeout(() => {
+          heart.remove();
+        }, 8000);
       }
     }
+
   </script>
 
 </body>

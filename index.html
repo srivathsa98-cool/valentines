@@ -140,14 +140,6 @@
       font-size: 16px;
     }
 
-    /* Hidden YouTube player */
-    #youtubeMusic {
-      position: absolute;
-      width: 0;
-      height: 0;
-      border: none;
-    }
-
   </style>
 </head>
 
@@ -188,19 +180,19 @@
   <!-- Floating hearts container -->
   <div id="heartsContainer"></div>
 
-  <!-- YouTube Music Embed (Ed Sheeran - Perfect) -->
-  <iframe id="youtubeMusic"
-    src=""
-    allow="autoplay">
-  </iframe>
+  <!-- Local Music File -->
+  <audio id="loveMusic" loop>
+    <source src="Perfect.mp3" type="audio/mpeg">
+  </audio>
 
   <script>
 
     function showMessage() {
 
-      // Start Ed Sheeran - Perfect
-      const iframe = document.getElementById("youtubeMusic");
-      iframe.src = "https://www.youtube.com/embed/2Vv-BfVoq4g?autoplay=1&loop=1&playlist=2Vv-BfVoq4g&start=20";
+      // Play local music file
+      const audio = document.getElementById("loveMusic");
+      audio.currentTime = 20; // optional start at 20 seconds
+      audio.play();
 
       // Show modal
       document.getElementById('loveModal').style.display = 'flex';
@@ -214,6 +206,7 @@
     }
 
     function createFloatingHearts(count) {
+
       const container = document.getElementById('heartsContainer');
 
       for(let i = 0; i < count; i++) {
